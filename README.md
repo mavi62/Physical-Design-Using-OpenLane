@@ -14,7 +14,6 @@ This project is done in the course ["Advanced Physical Design using OpenLANE/Sky
 
 [Day 5 : Final steps in RTL2GDS](#day-5)
 
-- [Reference](#reference)
 
 ## Day1
 
