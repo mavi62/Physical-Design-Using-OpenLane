@@ -117,7 +117,7 @@ cd ~/OpenLane
 make mount
 ./flow.tcl -interactive
 package require openlane 0.9
-prep -design picorv32a
+ -design picorv32a
 run_synthesis
 ```
 
@@ -956,7 +956,7 @@ Unlike the general ASIC flow, Power Distribution Network generation is not a par
 we can check whether PDN has been created or no by check the current def environment variable: ``` echo $::env(CURRENT_DEF)```
 
 ```
-prep -design picorv32a -tag Run 12.07.10.11
+prep -design picorv32a -tag RUN_2023.09.16_16.37.21
 gen_pdn
 
 ```
@@ -1120,3 +1120,16 @@ make mount
 ```
 
 </details>
+
+## Word of Thanks
+I sciencerly thank **Mr. Kunal Gosh**(Founder/**VSD**) for helping me out to complete this flow smoothly.
+
+## Acknowledgement
+- Kunal Ghosh, VSD Corp. Pvt. Ltd.
+- Chatgpt
+- Shant Rakshit,Colleague,IIIT B
+- Simarjeet Singh,Colleague,IIIT B
+  
+## Reference 
+- https://www.vsdiat.com
+- https://github.com/mrdunker
