@@ -265,7 +265,7 @@ Optimization is stage where we estimate the lenght and capictance, based on that
 Post placement, the design can be viewed on magic within results/placement directory:
 
 ```
-magic -T /home/parallels/OpenLane/vsdstdcelldesign/libs/sky130A.tech lef read tmp/merged.nom.lef def read results/floorplan/picorv32a.def &
+magic -T /home/OpenLane/vsdstdcelldesign/libs/sky130A.tech lef read tmp/merged.nom.lef def read results/floorplan/picorv32a.def &
 
 ```
 
