@@ -4,15 +4,19 @@ This project is done in the course ["Advanced Physical Design using OpenLANE/Sky
 
 ## Table of Contents
 
-- [Day1-Introduction](#Day1-introduction)
-- [Day2-Good Floorplan vs bad Floorplan](#Day2-Good-Floorplan-vs-bad-Floorplan)
-- [Day3-Design Library Cell using ngspice simulations](#Day3-Design-Library-Cell-using-ngspice-simulations)
-- [Day4-Pre-layout Timing analysis and CTS](#Day-4-Pre-layout-Timing-analysis-and-CTS)
-- [Day5-Final steps in RTL2GDS](#Day5-Final-steps-in-RTL2GDS)
+[Day 1 : Introduction](##day-1)
+
+[Day 2: Good Floorplan vs bad Floorplan](#day-2)
+
+[Day 3 : Design Library Cell using ngspice simulations](#day-3)
+
+[Day 4 : Pre-layout Timing analysis and CTS](#day-4)
+
+[Day 5 : Final steps in RTL2GDS](#day-5)
 
 - [Reference](#reference)
 
-# Day1
+## Day1
 
 <details>
   <summary>Introduction</summary>
@@ -138,7 +142,8 @@ View the synthesis statistics
 
 </details>
 
-# Day2
+## Day2
+
 <details>
 <summary>Chip Floor Planning Consideration</summary>
   
@@ -340,7 +345,7 @@ Low transition time = time(slew_high_fall_thr) - time (slew_low_fall_thr)
 
 </details>
 
-# DAY3 Design Library Cell using ngspice simulations
+## DAY3 
 
 <details>
   <summary>CMOS inverter ngspice simulations </summary>
@@ -632,7 +637,7 @@ spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 
 </details>
 
-# DAY 4 
+## DAY 4 
 
 <details>
 
@@ -908,3 +913,5 @@ Report after post_cts is
 ``` Setup slack - 2.2379 , Hold slack - 0.1869 ```
 
 </details>
+
+## DAY 5
