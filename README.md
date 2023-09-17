@@ -915,3 +915,206 @@ Report after post_cts is
 </details>
 
 ## DAY 5
+
+<details>
+	<summary>Final steps in RTL2GDS</summary>
+	
+ # Maze Routing and Lee's algorithm
+
+ Routing is the process of establishing a physical connection between two pins. Algorithms designed for routing take source and target pins and aim to find the most efficient path between them, ensuring a valid connection exists.
+
+The Maze Routing algorithm, such as the Lee algorithm, is one approach for solving routing problems. In this method, a grid similar to the one created during cell customization is utilized for routing purposes. The Lee algorithm starts with two designated points, the source and target, and leverages the routing grid to identify the shortest or optimal route between them.
+
+The algorithm assigns labels to neighboring grid cells around the source, incrementing them from 1 until it reaches the target (for instance, from 1 to 7). Various paths may emerge during this process, including L-shaped and zigzag-shaped routes. The Lee algorithm prioritizes selecting the best path, typically favoring L-shaped routes over zigzags. If no L-shaped paths are available, it may resort to zigzag routes. This approach is particularly valuable for global routing tasks.
+
+However, the Lee algorithm has limitations. It essentially constructs a maze and then numbers its cells from the source to the target. While effective for routing between two pins, it can be time-consuming when dealing with millions of pins. There are alternative algorithms that address similar routing challenges.
+
+![30](https://github.com/mavi62/IIITB_VLSI/assets/57127783/f66dfb8e-72e9-4127-81f1-ea2ae2ef4e72)
+
+
+# Design Rule Check (DRC)
+
+DRC verifies whether a design meets the predefined process technology rules given by the foundry for its manufacturing. DRC checking is an essential part of the physical design flow and ensures the design meets manufacturing requirements and will not result in a chip failure. It defines the Quality of chip. They are so many DRCs, let us see few of them
+
+Design rules for physical wires
+
+Minimum width of the wire
+Minimum spacing between the wires
+Minimum pitch of the wire To solve signal short violation, we take the metal layer and put it on to upper metal layer. we check via rules
+Via width
+via spacing
+
+![31](https://github.com/mavi62/IIITB_VLSI/assets/57127783/a1c1b7af-7566-41b0-bd43-0d0dff3a9c44)
+
+
+</details>
+<details>
+	<summary>Power Distribution Network generation</summary>
+
+Unlike the general ASIC flow, Power Distribution Network generation is not a part of floorplan run in OpenLANE. PDN must be generated after CTS and post-CTS STA analyses:
+
+we can check whether PDN has been created or no by check the current def environment variable: ``` echo $::env(CURRENT_DEF)```
+
+```
+prep -design picorv32a -tag Run 12.07.10.11
+gen_pdn
+
+```
+
+![32](https://github.com/mavi62/IIITB_VLSI/assets/57127783/05d9950e-a57e-4d67-88b6-55dd7dbc26bc)
+
+
+![33](https://github.com/mavi62/IIITB_VLSI/assets/57127783/3b773001-8ef0-4a2c-a566-bfc80ebf1da8)
+
+
+- Once the command is given, power distribution netwrok is generated.
+- The power distribution network has to take the ```design_cts.def``` as the input def file.
+- Power rings,strapes and rails are created by PDN.
+- From VDD and VSS pads, power is drawn to power rings.
+- Next, the horizontal and vertical strapes connected to rings draw the power from strapes.
+- Stapes are connected to rings and these rings are connected to std cells. So, standard cells get power from rails.
+- The standard cells are designed such that it's height is multiples of the vertical tracks /track pitch.Here, the pitch is 2.72. Only if the above conditions are adhered it is possible to power the standard cells.
+- There are definitions for the straps and the rails. In this design, straps are at metal layer 4 and 5 and the standard cell rails are at the metal layer 1. Vias connect accross the layers as required.
+
+![34](https://github.com/mavi62/IIITB_VLSI/assets/57127783/8f9bd104-fe30-43c6-a259-a553d27e9aae)
+
+
+</details>
+<details>
+	<summary>Routing</summary>
+
+ In the realm of routing within Electronic Design Automation (EDA) tools, such as both OpenLANE and commercial EDA tools, the routing process is exceptionally intricate due to the vast design space. To simplify this complexity, the routing procedure is typically divided into two distinct stages: Global Routing and Detailed Routing.
+
+The two routing engines responsible for handling these two stages are as follows:
+
+- **Global Routing**: In this stage, the routing region is subdivided into rectangular grid cells and represented as a coarse 3D routing graph. This task is accomplished by the "FASTE ROUTE" engine.
+
+- **Detailed Routing**: Here, finer grid granularity and routing guides are employed to implement the physical wiring. The "tritonRoute" engine comes into play at this stage. "Fast Route" generates initial routing guides, while "Triton Route" utilizes the Global Route information and further refines the routing, employing various strategies and optimizations to determine the most optimal path for connecting the pins.
+
+## Key Features of TritonRoute
+
+- **Initial Detail Routing**: TritonRoute initiates the detailed routing process, providing the foundation for the subsequent routing steps.
+
+- **Adherence to Pre-Processed Route Guides**: TritonRoute places significant emphasis on following pre-processed route guides. This involves several actions:
+
+   - **Initial Route Guide Analysis**: TritonRoute analyzes the directions specified in the preferred route guides. If any non-directional routing guides are identified, it breaks them down into unit widths.
+
+   - **Guide Splitting**: In cases where non-directional routing guides are encountered, TritonRoute divides them into unit widths to facilitate routing.
+
+   - **Guide Merging**: TritonRoute merges guides that are orthogonal (touching guides) to the preferred guides, streamlining the routing process.
+
+   - **Guide Bridging**: When it encounters guides that run parallel to the preferred routing guides, TritonRoute employs an additional layer to bridge them, ensuring efficient routing within the preprocessed guides.
+   - Assumes route guide for each net satisfy inter guide connectivity Same metal layer with touching guides or neighbouring metal layers with nonzero  vertically overlapped area( via are placed ).each unconnected termial i.e., pin of a standard cell instance should have its pin shape overlapped by a routing guide( a black dot(pin) with purple box(metal1 layer))
+  
+<img width="1281" alt="35" src="https://github.com/mavi62/IIITB_VLSI/assets/57127783/f46075e2-25ed-4c60-9bee-80877d8e5d49">
+
+
+In summary, TritonRoute is a sophisticated tool that not only performs initial detail routing but also places a strong emphasis on optimizing routing within pre-processed route guides by breaking down, merging, and bridging them as needed to achieve efficient and effective routing results.
+
+<img width="1290" alt="36" src="https://github.com/mavi62/IIITB_VLSI/assets/57127783/77a13e17-a847-4963-b599-e540b8ae1e81">
+
+
+Works on MILP(Mixed Integer linear programming) based panel routing scheme with Intra-layer parallel and Inter-layer sequential routing framework
+
+# TritonRoute problem statement
+
+```
+Inputs : LEF, DEF, Preprocessed route guides
+Output : Detailed routing solution with optimized wire length and via count
+Constraints : Route guide honoring, connectivity constraints and design rules.
+```
+
+The space where the detailed route takes place has been defined. Now TritonRoute handles the connectivity in two ways.
+
+Access Point(AP) : An on-grid point on the metal of the route guide, and is used to connect to lower-layer segments, pins or IO ports,upper-layer segments.
+Access Point Cluster(APC) : A union of all the Aps derived from same lower-layer segment, a pin or an IO port, upper-layer guide.
+
+**TritonRoute run for routing**
+
+Make sure the CURRENT_DEF is set to pdn.def
+
+Start routing by using
+
+```
+run_routing
+```
+
+The options for routing can be set in the config.tcl file.
+The optimisations in routing can also be done by specifying the routing strategy to use different version of TritonRoute Engine. There is a trade0ff between the optimised route and the runtime for routing.
+
+For the default setting picorv32a takes approximately 30 minutes according to the current version of TritonRoute.
+
+Here drc violation is zero:
+
+![37](https://github.com/mavi62/IIITB_VLSI/assets/57127783/e6975fce-820c-4b0f-9232-8b776b24faa8)
+
+
+## Layout in magic tool post routing: 
+
+The design can be viewed on magic within results/routing directory. Run the follwing command in that directory:
+
+```
+magic -T /home/OpenLane/vsdstdcelldesign/libs/sky130A.tech lef read tmp/merged.nom.lef def read results/routing/picorv32a.def &
+```
+
+![38](https://github.com/mavi62/IIITB_VLSI/assets/57127783/bc2de34f-507c-4f75-9c32-5bc34912ce55)
+
+
+## Identifing custom made sky130_vsdinv
+
+In tkcon type the follow command to check where sky130_vsdinv exist or not
+
+```
+getcell sky130_vsdinv
+what
+expand
+```
+
+![39](https://github.com/mavi62/IIITB_VLSI/assets/57127783/28750364-1e88-4d08-ba1c-7f06bff1cfeb)
+
+
+## Area using ```box``` command:
+
+![40](https://github.com/mavi62/IIITB_VLSI/assets/57127783/a1ceb800-e085-457c-ace7-8e42bca5390f)
+
+
+## slack report post routing:
+
+![41](https://github.com/mavi62/IIITB_VLSI/assets/57127783/1b014d0e-3124-4336-871c-b4154cb291a0)
+
+## Post-synthesis flip flop to standard cell ratio
+
+flip-flop to standard cell ratio = 1613/18508 = 0.0871
+
+![Screenshot from 2023-09-17 00-40-21](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/59abe810-16eb-4bad-8067-18adc7c47fc6)
+
+
+## Post-synthesis Gate count:-
+
+![Screenshot from 2023-09-16 01-39-33](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/f0d2cbc1-820c-4e95-b0d7-74f1f5db5fb2)
+
+# Openlane Interactive flow:
+
+```
+cd /home/OpenLane/
+
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+run_synthesis
+run_floorplan
+detailed_placement
+run_cts
+gen_pdn
+run_routing
+```
+
+# OpenLANE non-interactive flow
+
+```
+cd /home/OpenLane 
+make mount
+./flow.tcl -design picorv32a
+```
+
+</details>
