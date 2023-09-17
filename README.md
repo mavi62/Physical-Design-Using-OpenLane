@@ -365,7 +365,8 @@ SPICE Deck provides information about the following:
 - Model file - information of parameters related to transistors
 Simulation of CMOS using different width and lengths. From the waveform, irrespective of switching the shape of it are almost same.
 
-![242781674-5b494ae5-341a-41ff-a2bb-1db066fa2b72](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/ee5317df-1ef5-4140-88cc-562fecc2001c)
+![9](https://github.com/mavi62/IIITB_VLSI/assets/57127783/391cac8e-8f49-4b37-adbe-0e1a7dab20ed)
+
 
 From the waveform we can see the characteristics are maintained  across all sizes of CMOS. So CMOS as a circuit is a robust device hence use in designing of logic gates. Parameters that define the robustness of the CMOS are
 
@@ -374,7 +375,7 @@ From the waveform we can see the characteristics are maintained  across all size
 - The Switching Threshold of a CMOS inverter is the point where the Vin = Vout on the DC Transfer characreristics. 
 - At this point, both the transistors are in saturation region, means both are turned on and have high chances of current flowing driectly from VDD to Ground called Leakage current.
  
-![243084644-3393442e-1b4b-434a-bc7e-6e2ed4fde218](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/1dbabda5-c5bd-4676-a306-c0de5519c659)
+![10](https://github.com/mavi62/IIITB_VLSI/assets/57127783/d1c46221-8cef-4ab6-a8d2-0ab4fab524b7)
 
 
 Through transient analysis, we calculate the rise and fall delays of the CMOS by SPICE Simulation. As we know delays are calculated at 50% of the final values.
@@ -396,7 +397,7 @@ For layout we run magic command
 
 Ampersand at the end makes the next prompt line free, otherwise magic keeps the prompt line busy. Once we run the magic command we get the layout of the inverter in the magic window
 
-![Screenshot from 2023-09-10 12-01-56](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/f5ebf20c-53c3-4c3c-b5a1-5b45e8bf685d)
+![11](https://github.com/mavi62/IIITB_VLSI/assets/57127783/8f824761-6912-4314-af0e-3015a03b1f97)
 
 
 </details>
@@ -452,7 +453,8 @@ The 16-mask CMOS (Complementary Metal-Oxide-Semiconductor) fabrication process i
 
 This complex process results in the creation of advanced integrated circuits with multiple layers of interconnects, essential for modern electronic devices.
 
-<img width="1175" alt="Screenshot 2023-09-10 at 2 13 35 PM" src="https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/d2359062-24fa-45d1-9cb3-de8fa4ec796f">
+<img width="1175" alt="12" src="https://github.com/mavi62/IIITB_VLSI/assets/57127783/be1107ab-a442-4f53-bd92-3429207e32ae">
+
 
 ## SKY130 basic layer layout and LEF using inverter
 
@@ -461,7 +463,8 @@ This complex process results in the creation of advanced integrated circuits wit
 The First layer in skywater130 is ``localinterconnect layer(locali)`` , above that metal 1 is purple color and metal 2 is pink color.
 If you want to see connections between two different parts, place the cursor over that area and press S one times. The tkson window gives the component name.
 
-![Screenshot from 2023-09-10 15-17-48](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/69b54c77-b195-4ab3-b3f4-b68a75b45a28)
+![13](https://github.com/mavi62/IIITB_VLSI/assets/57127783/667e8a7d-8194-47a6-86b3-c25547e82cd6)
+
 
 ### Library exchange format (.lef)
 
@@ -483,7 +486,8 @@ Inorder to know the logical functioning of the inverter, we extract the spice an
       ``` ext2spice cthresh 0 rthresh 0 ``` - extracts parasatic capcitances also since these are actual layers - nothing is created in the folder
       ``` ext2spice ``` - a file ```sky130_inv.spice``` has been created.
   
-![Screenshot from 2023-09-10 15-40-43](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/4a7bf59a-fabe-47b2-9a7a-dd006bd9f1bf)
+![14](https://github.com/mavi62/IIITB_VLSI/assets/57127783/6e834382-c0d5-4f3c-9638-86e9f7eff228)
+
 
 </details>
 
@@ -521,7 +525,8 @@ These voltage sources and simulation commands are defined in the Deck file.
    .end
    ``
    
-![Screenshot from 2023-09-10 22-07-35](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/5d7b3380-f67b-4a2a-b771-147e423fd0e0)
+![15](https://github.com/mavi62/IIITB_VLSI/assets/57127783/7e7783e5-3074-4d44-8227-5325e1f76e52)
+
 
 ## Using ngspice for spice simulation
   
@@ -533,8 +538,10 @@ On the prompt you can see the values the ngspice has taken. To see the plot, use
    
    ``` plot y vs time a ``` 
    
-![Screenshot from 2023-09-10 22-18-54](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/55cbe4f1-0e53-4dc8-9ec4-c5cb6b168c45)
+![16](https://github.com/mavi62/IIITB_VLSI/assets/57127783/17ee3f4a-b635-4bd2-8fc2-ff2d6ef60060)
 
+
+![17](https://github.com/mavi62/IIITB_VLSI/assets/57127783/a2389c4a-96b8-4179-92e5-e01ac8a13cdb)
 
 ## Standard cell characterization of CMOS Iinverter 
  
@@ -572,10 +579,6 @@ We can download the packaged files from web using ``wget `` command. wget stands
   
   ``` wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz```
   
-The archive file drc_tests.tgz is downloaded into our user directory 
-  
-![wget](https://github.com/sindhuk95/SKY130_PD_WS_DAY3/assets/135046169/3358159c-b338-43f4-b811-58a11284e75b)
-
 once extraction is done, drc_tests file is created and you will have all the information about magic layout for this lab exercise
 
 Now run MAGIC
@@ -584,14 +587,8 @@ For better graphics use command ``magic -d XR ``
 
 Now, lets see an example of simple failing set of rules of metal 1 layer.  you can either run this by magic command line `` magic -d XR met1.mag `` or from the magic console window, `` menu - file - open -load file9here, met1.mag) ``
 
-![Screenshot from 2023-09-10 22-52-50](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/d5ecd2e6-21be-4794-aea1-48df708bb1d6)
+![18](https://github.com/mavi62/IIITB_VLSI/assets/57127783/5bc08494-f545-4f56-9f87-397617d6c1c5)
 
-We use following commands to see metal cut as shown.
-```
-cif see VIA2
-
-```
-![Screenshot from 2023-09-10 23-11-08](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/748bb43a-88a8-42ef-861a-a52242efa105)
 
 ## Load Sky130 tech rules for drc challenges 
 
@@ -599,11 +596,7 @@ First load the poly file by ``load poly.mag`` on tkcon window.
 
 Finding the error by mouse cursor and find the box area, Poly.9 is violated due to spacing between polyres and poly.
 
-![Screenshot from 2023-09-10 23-15-04](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/6800d982-37a6-4bd7-9764-b5b80dba8d90)
-
-We find that distance between regular polysilicon & poly resistor should be 22um but it is showing 17um and still no errors . We should go to sky130A.tech file and modify as follows to detect this error.
-
-![Screenshot from 2023-09-10 23-24-02](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/0d199111-ded8-4193-a024-544227ab142c)
+![19](https://github.com/mavi62/IIITB_VLSI/assets/57127783/d1a73869-0e80-4939-87eb-28b508345700)
 
 
 In line
@@ -633,7 +626,7 @@ spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
 
 ```
-![Screenshot from 2023-09-10 23-15-04](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/13aa309a-c2a7-427a-aae9-780a32229150)
+![20](https://github.com/mavi62/IIITB_VLSI/assets/57127783/2e957d26-b148-4031-9941-12241ad63a77)
 
 
 </details>
