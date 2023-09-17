@@ -1082,16 +1082,18 @@ expand
 
 ![41](https://github.com/mavi62/IIITB_VLSI/assets/57127783/1b014d0e-3124-4336-871c-b4154cb291a0)
 
+
 ## Post-synthesis flip flop to standard cell ratio
 
 flip-flop to standard cell ratio = 1613/18508 = 0.0871
 
-![Screenshot from 2023-09-17 00-40-21](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/59abe810-16eb-4bad-8067-18adc7c47fc6)
+![42](https://github.com/mavi62/IIITB_VLSI/assets/57127783/3d006801-df80-48da-b196-642a2adbc0aa)
 
 
 ## Post-synthesis Gate count:-
 
-![Screenshot from 2023-09-16 01-39-33](https://github.com/alwinshaju08/Physicaldesign_openlane/assets/69166205/f0d2cbc1-820c-4e95-b0d7-74f1f5db5fb2)
+![43](https://github.com/mavi62/IIITB_VLSI/assets/57127783/e0430bef-1e07-4fc8-b39c-40ec32d18b5c)
+
 
 # Openlane Interactive flow:
 
