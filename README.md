@@ -611,10 +611,11 @@ change to
 spacing npres allpolynonres 480 touching_illegal \
 	"poly.resistor spacing to N-tap < %d (poly.9)"
 ```
+
 Also,
+
 ```
 spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
-
 	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
 ```
 
@@ -624,8 +625,8 @@ change to
 spacing xhrpoly,uhrpoly,xpc allpolynonres 480 touching_illegal \
 
 	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
-
 ```
+
 ![20](https://github.com/mavi62/IIITB_VLSI/assets/57127783/2e957d26-b148-4031-9941-12241ad63a77)
 
 
@@ -666,7 +667,6 @@ To ensure that ports lie on the intersection point, the grid spacing in Magic (t
 
 ```
 grid 0.46um 0.34um 0.23um 0.17um
-
 ```
 
 ![22](https://github.com/mavi62/IIITB_VLSI/assets/57127783/f041d97b-fcfa-4caf-a64c-b713d2728fa5)
@@ -692,25 +692,31 @@ The way to define a port is through Magic console and following are the steps:
 After defining ports, the next step is setting port class and port use attributes.
 
 Select port A in magic:
+
 ```
 port class input
 port use signal
 ```
+
 Select Y area
+
 ```
 port class output
 port use signal
 ```
+
 Select VPWR area
+
 ```
 port class inout
 port use power
 ```
+
 Select VGND area
+
 ```
 port class inout
 port use ground
-
 ```
 
 ![24](https://github.com/mavi62/IIITB_VLSI/assets/57127783/12ca320b-6c4e-4d2b-8b0e-0198d24e3eea)
@@ -725,8 +731,8 @@ We generate lef file by command:
 
 ```
 lef write
-
 ```
+
 This generates sky130_vsdinv.lef file.
 
 ![25](https://github.com/mavi62/IIITB_VLSI/assets/57127783/4b7447fe-fc44-4720-b44c-7630da099cf1)
@@ -737,7 +743,6 @@ This generates sky130_vsdinv.lef file.
 We have created a custom standard cell in previous steps of an inverter. Copy lef file, sky130_fd_sc_hd_typical.lib, sky130_fd_sc_hd_slow.lib & sky130_fd_sc_hd_fast.lib to src folder of picorv32a from libs folder vsdstdcelldesign. Then modify the config.tcl as follows.
 
 ```
-
 # Design
 set ::env(DESIGN_NAME) "picorv32a"
 
@@ -769,8 +774,8 @@ prep -design picorv32a -tag RUN_2023.09.09_20.37.18 -overwrite
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 run_synthesis
-
 ```
+
 synthesis report :
 
 ![26](https://github.com/mavi62/IIITB_VLSI/assets/57127783/ac7dad9e-1813-4a1d-9208-d634033fb2c7)
@@ -781,6 +786,7 @@ synthesis report :
 Basically, Delay is a parameter that has huge impact on our cells in the design. Delay decides each and every other factor in timing. 
 For a cell with different size, threshold voltages, delay model table is created where we can it as timing table.
 ```Delay of a cell depends on input transition and out load```. 
+
 Lets say two scenarios, 
 we have long wire and the cell(X1) is sitting at the end of the wire : the delay of this cell will be different because of the bad transition that caused due to the resistance and capcitances on the long wire.
 we have the same cell sitting at the end of the short wire: the delay of this will be different since the tarn is not that bad comapred to the earlier scenario.
@@ -804,7 +810,7 @@ Now ``` run_placement```
 After placement, we check for legality &To check the layout invoke magic from the results/placement directory:
 
 ```
-magic -T /home/parallels/OpenLane/vsdstdcelldesign/libs/sky130A.tech lef read tmp/merged.nom.lef def read results/floorplan/picorv32a.def &
+ magic -T /home/mavi/.volare/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32.def &
 
 ```
 
@@ -827,7 +833,7 @@ sdc file for OpenSTA is modified like this:
 base.sdc is located in vsdstdcelldesigns/extras directory.
 So, I copied it into our design folder using
 
-``` cp my_base.sdc /home/parallels/OpenLane/designs/picorv32a/src/ ```
+``` cp my_base.sdc /home/OpenLane/designs/picorv32a/src/ ```
 
 Since clock is propagated only once we do CTS, In placement stage, clock is considered to be ideal. So only setup slack is taken into consideration before CTS.
 
@@ -835,8 +841,8 @@ Since clock is propagated only once we do CTS, In placement stage, clock is cons
 Setup time: minimum time required for the data to be stable before the active edge of the clock to get properly captured.
 
 Setup slack : data required time - data arrival time 
-
 ```
+
 clock is generated from PLL which has inbuilt circuit which cells and some logic. There might variations in the clock generation depending upon the ckt. These variations are collectivity known as clock uncertainity. In that jitter is one of the parameter. It is uncertain that clock might come at that exact time withought any deviation. That is why it is called clock_uncertainity
 Skew, Jitter and Margin comes into clock_uncertainity
 
@@ -888,16 +894,17 @@ Clock Domain Isolation: VLSI designs often have multiple clock domains. Shieldin
 
 # test:
 type this in openlane
+
 ```
 echo $::env(CTS_CLK_BUFFER_LIST)
 set $::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
 echo $::env(CTS_CLK_BUFFER_LIST)
 ```
+
 After changing the files, load the placement stage def file and run cts again. 
 Now, again run OpenROAD and create another db and everything else is same.
 Report after post_cts is
 
 ``` Setup slack - 2.2379 , Hold slack - 0.1869 ```
-
 
 </details>
