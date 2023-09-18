@@ -1069,7 +1069,7 @@ what
 expand
 ```
 
-![39](https://github.com/mavi62/IIITB_VLSI/assets/57127783/28750364-1e88-4d08-ba1c-7f06bff1cfeb)
+![24523](https://github.com/mavi62/Physical-Design-Using-OpenLane/assets/57127783/0965b198-5665-47d6-ac0a-2eb6d9db5455)
 
 
 ## Area using ```box``` command:
